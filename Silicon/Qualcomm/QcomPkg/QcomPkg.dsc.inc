@@ -176,12 +176,9 @@
 
   # ARM PL031 RTC Driver
   TimeBaseLib|EmbeddedPkg/Library/TimeBaseLib/TimeBaseLib.inf
-
-!if $(TARGET) == RELEASE
-  SerialPortLib|MdePkg/Library/BaseSerialPortLibNull/BaseSerialPortLibNull.inf
-!else
-  SerialPortLib|QcomPkg/Library/FrameBufferSerialPortLib/FrameBufferSerialPortLib.inf
-!endif
+  
+  # PSTORE Logging
+  SerialPortLib|QcomPkg/Library/InMemorySerialPortLib/InMemorySerialPortLib.inf
 
   AslUpdateLib|QcomPkg/Library/DxeAslUpdateLib/DxeAslUpdateLib.inf
   PlatformThemeLib|QcomPkg/Library/PlatformThemeLib/PlatformThemeLib.inf

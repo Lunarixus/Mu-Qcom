@@ -15,6 +15,7 @@ EarlyInitialization(VOID)
 {
   EFI_STATUS                      Status;
   ARM_MEMORY_REGION_DESCRIPTOR_EX DisplayMemoryRegion;
+  ARM_MEMORY_REGION_DESCRIPTOR_EX PStoreMemoryRegion;
 
   // Initialize SerialPortLib
   SerialPortInitialize();
@@ -24,6 +25,15 @@ EarlyInitialization(VOID)
   if (!EFI_ERROR (Status)) {
     // Clear Screen
     ZeroMem((VOID *)DisplayMemoryRegion.Address, DisplayMemoryRegion.Length);
+  }
+
+  Status = LocateMemoryMapAreaByName("PStore", &PStoreMemoryRegion);
+  if(!EFI_ERROR (Status)) {
+    // Clear PStore area
+    UINT8 *base = (UINT8 *)PStoreMemoryRegion.Address;
+    for (UINTN i = 0; i < PStoreMemoryRegion.Length; i++) {
+      base[i] = 0;
+    }
   }
 
   // Print UEFI Infos
